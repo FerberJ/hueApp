@@ -55,17 +55,22 @@ func (hue *Hue) GetLights() ([]models.Light, error) {
 	return hue.Lights, nil
 }
 
-func (hue *Hue) ToggleLight(light models.Light) error {
+func (hue *Hue) ToggleLight(light models.Light, on bool) error {
 	if hue.Home == nil {
 		return fmt.Errorf("home was not initilised")
 	}
 
+	var brightness float32 = 100
+
 	hue.Home.UpdateLight(light.ID, openhue.LightPut{
 		On: &openhue.On{
 			On: func() *bool {
-				toggled := !light.On
+				toggled := on
 				return &toggled
 			}(),
+		},
+		Dimming: &openhue.Dimming{
+			Brightness: &brightness,
 		},
 	})
 
@@ -73,6 +78,14 @@ func (hue *Hue) ToggleLight(light models.Light) error {
 		if hueLight.ID == light.ID {
 			hueLight.On = !hueLight.On
 		}
+	}
+
+	return nil
+}
+
+func (hue *Hue) ToggleGroup(group models.Group) error {
+	for _, light := range group.Lights {
+		hue.ToggleLight(light, !group.On)
 	}
 
 	return nil

@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"fmt"
 	"openHueApp/backend/models"
 	"openHueApp/backend/repository"
 
@@ -49,7 +48,6 @@ func (a *App) GetGroup(id string) (models.Group, error) {
 
 func (a *App) GetGroups() ([]models.Group, error) {
 	var groups = []models.Group{}
-	fmt.Println("Start getgroups")
 	r := repository.NewGroupRepository(a.SqlLite.Db)
 	res, err := r.GetAll()
 	if err != nil {
@@ -57,7 +55,15 @@ func (a *App) GetGroups() ([]models.Group, error) {
 	}
 
 	groups = res.([]models.Group)
-	fmt.Println(groups)
+
+	for _, group := range groups {
+		for _, light := range group.Lights {
+			group.On = false
+			if light.On {
+				group.On = true
+			}
+		}
+	}
 
 	return groups, nil
 }
@@ -85,4 +91,11 @@ func (a *App) DeleteGroup(id string) error {
 func (a *App) GetGroupByName(name string) (models.Group, error) {
 	r := repository.NewGroupRepository(a.SqlLite.Db)
 	return r.GetByName(name)
+}
+
+func (a *App) ToggleGroupLike(group models.Group) error {
+	changedEntity := group.ToggleLiked()
+
+	r := repository.NewGroupRepository(a.SqlLite.Db)
+	return r.ToggleLiked(changedEntity, "groups")
 }

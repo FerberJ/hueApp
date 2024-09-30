@@ -19,7 +19,7 @@
     };
 
     function toggleLight(lamp) {
-        ToggleLight(lamp);
+        ToggleLight(lamp, !lamp.on);
         lampStore.update((l) => ({ ...l, on: !l.on }));
     }
 
@@ -30,7 +30,7 @@
     }
 </script>
 
-<Card.Root class="font-mono relative">
+<Card.Root class="font-mono relative min-w-64">
     <ContextMenu.Root>
         <ContextMenu.Trigger>
             <Card.Content

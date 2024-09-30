@@ -40,6 +40,8 @@ export function GetRoomOptions():Promise<Array<models.RoomOptions>>;
 
 export function GetRooms():Promise<Array<models.Room>>;
 
+export function ToggleGroupLike(arg1:models.Group):Promise<void>;
+
 export function ToggleLightLike(arg1:models.Light):Promise<void>;
 
 export function UpdateGroup(arg1:models.Group):Promise<void>;

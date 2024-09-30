@@ -10,6 +10,10 @@ export function Startup(arg1) {
   return window['go']['hue']['Hue']['Startup'](arg1);
 }
 
-export function ToggleLight(arg1) {
-  return window['go']['hue']['Hue']['ToggleLight'](arg1);
+export function ToggleGroup(arg1) {
+  return window['go']['hue']['Hue']['ToggleGroup'](arg1);
+}
+
+export function ToggleLight(arg1, arg2) {
+  return window['go']['hue']['Hue']['ToggleLight'](arg1, arg2);
 }
