@@ -17,3 +17,7 @@ export function ToggleGroup(arg1) {
 export function ToggleLight(arg1, arg2) {
   return window['go']['hue']['Hue']['ToggleLight'](arg1, arg2);
 }
+
+export function ToggleRoom(arg1) {
+  return window['go']['hue']['Hue']['ToggleRoom'](arg1);
+}

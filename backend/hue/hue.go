@@ -90,3 +90,11 @@ func (hue *Hue) ToggleGroup(group models.Group) error {
 
 	return nil
 }
+
+func (hue *Hue) ToggleRoom(room models.Room) error {
+	for _, light := range room.Lights {
+		hue.ToggleLight(light, !room.On)
+	}
+
+	return nil
+}

@@ -83,3 +83,10 @@ func (a *App) GetRoomByName(name string) (models.Room, error) {
 	r := repository.NewRoomRepository(a.SqlLite.Db)
 	return r.GetByName(name)
 }
+
+func (a *App) ToggleRoomLike(room models.Room) error {
+	changedEntity := room.ToggleLiked()
+
+	r := repository.NewLightRepository(a.SqlLite.Db)
+	return r.ToggleLiked(changedEntity, "rooms")
+}

@@ -30,7 +30,7 @@
     }
 </script>
 
-<Card.Root class="font-mono relative min-w-64">
+<Card.Root class="font-mono relative min-w-80">
     <ContextMenu.Root>
         <ContextMenu.Trigger>
             <Card.Content

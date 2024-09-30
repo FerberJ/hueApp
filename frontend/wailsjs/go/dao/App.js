@@ -86,6 +86,10 @@ export function ToggleLightLike(arg1) {
   return window['go']['dao']['App']['ToggleLightLike'](arg1);
 }
 
+export function ToggleRoomLike(arg1) {
+  return window['go']['dao']['App']['ToggleRoomLike'](arg1);
+}
+
 export function UpdateGroup(arg1) {
   return window['go']['dao']['App']['UpdateGroup'](arg1);
 }

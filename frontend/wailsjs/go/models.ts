@@ -10,6 +10,8 @@ export namespace models {
 	    deletedAt: any;
 	    liked: boolean;
 	    name: string;
+	    lights: Light[];
+	    on: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Room(source);
@@ -23,6 +25,8 @@ export namespace models {
 	        this.deletedAt = this.convertValues(source["deletedAt"], null);
 	        this.liked = source["liked"];
 	        this.name = source["name"];
+	        this.lights = this.convertValues(source["lights"], Light);
+	        this.on = source["on"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

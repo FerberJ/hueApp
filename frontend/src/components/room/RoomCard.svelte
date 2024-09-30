@@ -2,23 +2,24 @@
     import * as Card from "$lib/components/ui/card";
     import { Lightbulb, Heart } from "lucide-svelte";
     import { Button } from "$lib/components/ui/button/index.js";
-    import { ToggleGroup, ToggleLight } from "../../../wailsjs/go/hue/Hue.js";
+    import { ToggleRoom } from "../../../wailsjs/go/hue/Hue.js";
     import { writable } from "svelte/store";
-    import { ToggleLightLike, ToggleGroupLike } from "../../../wailsjs/go/dao/App.js";
+    import { ToggleRoomLike } from "../../../wailsjs/go/dao/App.js";
 
-    export let group;
-    export const groupStore = writable(group);
+    export let room;
+    export const roomStore = writable(room);
 
 
 
-    function toggleGroup(group) {
-        ToggleGroup(group);
-        groupStore.update((l) => ({ ...l, on: !l.on }));
+    function toggleRoom(room) {
+        console.log(room)
+        ToggleRoom(room);
+        roomStore.update((l) => ({ ...l, on: !l.on }));
     }
 
     function toggleLike() {
-        ToggleGroupLike(group);
-        groupStore.update((l) => ({ ...l, liked: !l.liked }));
+        ToggleRoomLike(room);
+        roomStore.update((l) => ({ ...l, liked: !l.liked }));
     }
 </script>
 
@@ -28,23 +29,23 @@
             class="row-span-2"
             variant="outline"
             on:click={() => {
-                toggleGroup($groupStore);
+                toggleRoom($roomStore);
             }}
         >
-            {#if $groupStore.on}
+            {#if $roomStore.on}
                 <Lightbulb fill="#eab308" />
             {:else}
                 <Lightbulb />
             {/if}
         </Button>
-        <p class="col-span-2 text-left">{$groupStore.name}</p>
+        <p class="col-span-2 text-left">{$roomStore.name}</p>
     </Card.Content>
     <Button
         variant="ghost"
         class="absolute top-0 right-0"
         on:click={toggleLike}
     >
-        {#if $groupStore.liked}
+        {#if $roomStore.liked}
             <Heart fill="#f472b6" />
         {:else}
             <Heart />

@@ -10,3 +10,5 @@ export function Startup(arg1:context.Context):Promise<void>;
 export function ToggleGroup(arg1:models.Group):Promise<void>;
 
 export function ToggleLight(arg1:models.Light,arg2:boolean):Promise<void>;
+
+export function ToggleRoom(arg1:models.Room):Promise<void>;

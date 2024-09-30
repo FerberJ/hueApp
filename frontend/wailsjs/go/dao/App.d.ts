@@ -44,6 +44,8 @@ export function ToggleGroupLike(arg1:models.Group):Promise<void>;
 
 export function ToggleLightLike(arg1:models.Light):Promise<void>;
 
+export function ToggleRoomLike(arg1:models.Room):Promise<void>;
+
 export function UpdateGroup(arg1:models.Group):Promise<void>;
 
 export function UpdateLight(arg1:models.Light,arg2:string,arg3:string):Promise<void>;
