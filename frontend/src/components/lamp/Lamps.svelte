@@ -12,6 +12,21 @@
 
     let lamps = [];
 
+    function updateLamps() {
+        GetLights().then(hueLights => {
+            lamps = lamps.map(lamp => {
+                const hueLamp = hueLights.find(hue => hue.id === lamp.id);
+                if (hueLamp) {
+                    return {
+                        ...lamp,
+                        on: hueLamp.on,
+                    };
+                }
+                return lamp;
+            });
+        });
+    }
+
     onMount(async () => {
         // get groups
         const groups = await GetGroupOptions();
@@ -40,15 +55,17 @@
             return aName.localeCompare(bName);
         });
         lamps = dbLamps;
+
+        setInterval(() => {
+            updateLamps();
+        }, 1500);
     });
 </script>
 
-<ScrollArea
-    class="h-dvh"
-    style="height: calc(100vh-50px)"
-    orientation="both"
->
-    <div class="grid grid-flow-row sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 px-4 py-4">
+<ScrollArea class="h-dvh" style="height: calc(100vh-50px)" orientation="both">
+    <div
+        class="grid grid-flow-row sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 px-4 py-4"
+    >
         {#each lamps as lamp}
             <LampCard {lamp} />
         {/each}

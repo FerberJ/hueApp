@@ -43,12 +43,24 @@ func (hue *Hue) GetLights() ([]models.Light, error) {
 	hue.Lights = []models.Light{}
 
 	for _, light := range lights {
+		var brightness float32
+		dimming := light.Dimming
+		if dimming != nil {
+			brightness = *dimming.Brightness
+		} else {
+			if light.IsOn() {
+				brightness = 100
+			} else {
+				brightness = 0
+			}
+		}
 		hue.Lights = append(hue.Lights, models.Light{
 			Model: models.Model{
 				ID: *light.Id,
 			},
-			Name: *light.Metadata.Name,
-			On:   light.IsOn(),
+			Name:       *light.Metadata.Name,
+			On:         light.IsOn(),
+			Brightness: brightness,
 		})
 	}
 
@@ -77,6 +89,32 @@ func (hue *Hue) ToggleLight(light models.Light, on bool) error {
 	for _, hueLight := range hue.Lights {
 		if hueLight.ID == light.ID {
 			hueLight.On = !hueLight.On
+		}
+	}
+
+	return nil
+}
+
+func (hue *Hue) DimLight(light models.Light, brightness float32) error {
+	if hue.Home == nil {
+		return fmt.Errorf("home was not initilised")
+	}
+
+	on := true
+
+	hue.Home.UpdateLight(light.ID, openhue.LightPut{
+		On: &openhue.On{
+			On: &on,
+		},
+		Dimming: &openhue.Dimming{
+			Brightness: &brightness,
+		},
+	})
+
+	for _, hueLight := range hue.Lights {
+		if hueLight.ID == light.ID {
+			hueLight.On = on
+			hueLight.Brightness = brightness
 		}
 	}
 

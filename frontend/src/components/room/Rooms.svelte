@@ -7,25 +7,44 @@
 
     let rooms = [];
 
+    function updateRooms() {
+        GetLights().then((hueLight) => {
+            rooms = rooms.map((room) => {
+                if (room.lights) {
+                    const filteredLights = hueLight.filter((item1) =>
+                        room.lights.some((item2) => item1.id === item2.id),
+                    );
+                    return {
+                        ...room,
+                        on: filteredLights.some((light) => light.on),
+                    };
+                }
+                return room;
+            });
+        });
+    }
+
     onMount(async () => {
         const [roomsRes, hueLights] = await Promise.all([
             GetRooms(),
             GetLights(),
         ]);
 
-        console.log(roomsRes)
-
-        roomsRes.forEach((group) => {
-            if (group.lights) {
+        roomsRes.forEach((room) => {
+            if (room.lights) {
                 const filteredLights = hueLights.filter((item1) =>
-                    group.lights.some((item2) => item1.id === item2.id),
+                    room.lights.some((item2) => item1.id === item2.id),
                 );
 
-                group.on = filteredLights.some((light) => light.on);
+                room.on = filteredLights.some((light) => light.on);
             }
         });
 
         rooms = roomsRes;
+
+        setInterval(() => {
+            updateRooms();
+        }, 1500);
     });
 </script>
 

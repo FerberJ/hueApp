@@ -99,3 +99,25 @@ func (a *App) ToggleGroupLike(group models.Group) error {
 	r := repository.NewGroupRepository(a.SqlLite.Db)
 	return r.ToggleLiked(changedEntity, "groups")
 }
+
+func (a *App) GetLikedGroups() ([]models.Group, error) {
+	var groups = []models.Group{}
+	r := repository.NewGroupRepository(a.SqlLite.Db)
+	res, err := r.GetAllLiked()
+	if err != nil {
+		return groups, err
+	}
+
+	groups = res.([]models.Group)
+
+	for _, group := range groups {
+		for _, light := range group.Lights {
+			group.On = false
+			if light.On {
+				group.On = true
+			}
+		}
+	}
+
+	return groups, nil
+}

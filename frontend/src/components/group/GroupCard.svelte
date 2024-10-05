@@ -2,14 +2,12 @@
     import * as Card from "$lib/components/ui/card";
     import { Lightbulb, Heart } from "lucide-svelte";
     import { Button } from "$lib/components/ui/button/index.js";
-    import { ToggleGroup, ToggleLight } from "../../../wailsjs/go/hue/Hue.js";
+    import { ToggleGroup } from "../../../wailsjs/go/hue/Hue.js";
     import { writable } from "svelte/store";
-    import { ToggleLightLike, ToggleGroupLike } from "../../../wailsjs/go/dao/App.js";
+    import { ToggleGroupLike } from "../../../wailsjs/go/dao/App.js";
 
     export let group;
     export const groupStore = writable(group);
-
-
 
     function toggleGroup(group) {
         ToggleGroup(group);
@@ -19,6 +17,10 @@
     function toggleLike() {
         ToggleGroupLike(group);
         groupStore.update((l) => ({ ...l, liked: !l.liked }));
+    }
+
+    $: if (group) {
+        groupStore.set(group);
     }
 </script>
 

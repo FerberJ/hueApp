@@ -3,6 +3,8 @@
 import {models} from '../models';
 import {context} from '../models';
 
+export function DimLight(arg1:models.Light,arg2:number):Promise<void>;
+
 export function GetLights():Promise<Array<models.Light>>;
 
 export function Startup(arg1:context.Context):Promise<void>;

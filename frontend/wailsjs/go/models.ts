@@ -63,6 +63,7 @@ export namespace models {
 	    group: Group;
 	    roomRef: string;
 	    room: Room;
+	    brightness: number;
 	
 	    static createFrom(source: any = {}) {
 	        return new Light(source);
@@ -82,6 +83,7 @@ export namespace models {
 	        this.group = this.convertValues(source["group"], Group);
 	        this.roomRef = source["roomRef"];
 	        this.room = this.convertValues(source["room"], Room);
+	        this.brightness = source["brightness"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

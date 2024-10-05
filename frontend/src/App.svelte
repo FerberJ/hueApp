@@ -3,8 +3,9 @@
   import "./app.css";
   import Lamps from "./components/lamp/Lamps.svelte";
   import Navbar from "./components/navbar/Navbar.svelte";
-    import Groups from "./components/group/Groups.svelte";
-    import Rooms from "./components/room/Rooms.svelte";
+  import Groups from "./components/group/Groups.svelte";
+  import Rooms from "./components/room/Rooms.svelte";
+    import Liked from "./components/liked/Liked.svelte";
 
   const sidebarNavItems = [
     {
@@ -41,14 +42,17 @@
     </div>
     <div>
       {#if selectedIndex === 2}
-        <Groups/>
+        <Groups />
       {/if}
       {#if selectedIndex === 3}
-      <Lamps />
+        <Lamps />
       {/if}
       {#if selectedIndex === 1}
-      <Rooms />
+        <Rooms />
       {/if}
+      {#if selectedIndex === 0}
+      <Liked />
+    {/if}
     </div>
   </div>
 </main>

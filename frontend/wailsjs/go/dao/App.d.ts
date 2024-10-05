@@ -30,6 +30,12 @@ export function GetLight(arg1:string):Promise<models.Light>;
 
 export function GetLights():Promise<Array<models.Light>>;
 
+export function GetLikedGroups():Promise<Array<models.Group>>;
+
+export function GetLikedLights():Promise<Array<models.Light>>;
+
+export function GetLikedRooms():Promise<Array<models.Room>>;
+
 export function GetOrCreateLight(arg1:models.Light):Promise<models.Light>;
 
 export function GetRoom(arg1:string):Promise<models.Room>;
@@ -48,6 +54,6 @@ export function ToggleRoomLike(arg1:models.Room):Promise<void>;
 
 export function UpdateGroup(arg1:models.Group):Promise<void>;
 
-export function UpdateLight(arg1:models.Light,arg2:string,arg3:string):Promise<void>;
+export function UpdateLight(arg1:models.Light):Promise<void>;
 
 export function UpdateRoom(arg1:models.Room):Promise<void>;

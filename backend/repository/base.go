@@ -120,6 +120,24 @@ func (r *BaseRepository) GetAll() (any, error) {
 	return entities, nil
 }
 
+/*
+Gets list of entity from DB
+
+Usage (example with models.Course):
+
+	res, err := repository.GetAllLiked()
+	lights := res.([]models.Light)
+*/
+func (r *BaseRepository) GetAllLiked() (any, error) {
+	entities := r.getSliceInterface()
+	result := r.db.Preload(clause.Associations).Where("liked = 1").Find(&entities)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return entities, nil
+}
+
 func (r *BaseRepository) ToggleLiked(entity any, table string) error {
 	return r.db.Table(table).Save(entity).Error
 }

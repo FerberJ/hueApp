@@ -90,3 +90,16 @@ func (a *App) ToggleRoomLike(room models.Room) error {
 	r := repository.NewLightRepository(a.SqlLite.Db)
 	return r.ToggleLiked(changedEntity, "rooms")
 }
+
+func (a *App) GetLikedRooms() ([]models.Room, error) {
+	var rooms = []models.Room{}
+	r := repository.NewRoomRepository(a.SqlLite.Db)
+	res, err := r.GetAllLiked()
+	if err != nil {
+		return rooms, err
+	}
+
+	rooms = res.([]models.Room)
+
+	return rooms, nil
+}

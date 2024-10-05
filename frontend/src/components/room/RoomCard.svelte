@@ -12,7 +12,6 @@
 
 
     function toggleRoom(room) {
-        console.log(room)
         ToggleRoom(room);
         roomStore.update((l) => ({ ...l, on: !l.on }));
     }
@@ -20,6 +19,10 @@
     function toggleLike() {
         ToggleRoomLike(room);
         roomStore.update((l) => ({ ...l, liked: !l.liked }));
+    }
+
+    $: if (room) {
+        roomStore.set(room)
     }
 </script>
 

@@ -24,10 +24,11 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:         "Hue",
-		Width:         1024,
-		Height:        768,
-		DisableResize: false,
+		Title:            "Hue",
+		Width:            1024,
+		Height:           768,
+		DisableResize:    false,
+		BackgroundColour: &options.RGBA{R: 99, G: 102, B: 106, A: 200},
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
@@ -37,6 +38,8 @@ func main() {
 			app,
 		},
 		Mac: &mac.Options{
+			WebviewIsTransparent: false,
+			WindowIsTranslucent:  false,
 			About: &mac.AboutInfo{
 				Title:   "My Application",
 				Message: "© 2024 jakob ferber",

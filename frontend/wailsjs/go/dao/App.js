@@ -58,6 +58,18 @@ export function GetLights() {
   return window['go']['dao']['App']['GetLights']();
 }
 
+export function GetLikedGroups() {
+  return window['go']['dao']['App']['GetLikedGroups']();
+}
+
+export function GetLikedLights() {
+  return window['go']['dao']['App']['GetLikedLights']();
+}
+
+export function GetLikedRooms() {
+  return window['go']['dao']['App']['GetLikedRooms']();
+}
+
 export function GetOrCreateLight(arg1) {
   return window['go']['dao']['App']['GetOrCreateLight'](arg1);
 }
@@ -94,8 +106,8 @@ export function UpdateGroup(arg1) {
   return window['go']['dao']['App']['UpdateGroup'](arg1);
 }
 
-export function UpdateLight(arg1, arg2, arg3) {
-  return window['go']['dao']['App']['UpdateLight'](arg1, arg2, arg3);
+export function UpdateLight(arg1) {
+  return window['go']['dao']['App']['UpdateLight'](arg1);
 }
 
 export function UpdateRoom(arg1) {

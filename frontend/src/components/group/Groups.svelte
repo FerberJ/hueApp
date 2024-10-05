@@ -7,6 +7,23 @@
 
     let groups = [];
 
+    function updateGroups() {
+        GetLights().then((hueLight) => {
+            groups = groups.map((group) => {
+                if (group.lights) {
+                    const filteredLights = hueLight.filter((item1) =>
+                        group.lights.some((item2) => item1.id === item2.id),
+                    );
+                    return {
+                        ...group,
+                        on: filteredLights.some((light) => light.on),
+                    };
+                }
+                return group;
+            });
+        });
+    }
+
     onMount(async () => {
         const [groupsRes, hueLights] = await Promise.all([
             GetGroups(),
@@ -24,6 +41,10 @@
         });
 
         groups = groupsRes;
+
+        setInterval(() => {
+            updateGroups();
+        }, 1500);
     });
 </script>
 

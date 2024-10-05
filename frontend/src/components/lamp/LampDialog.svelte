@@ -13,15 +13,11 @@
         UpdateLight,
     } from "../../../wailsjs/go/dao/App";
 
-
     export let isDialogOpen;
-    export let lamp
+    export let lamp;
 
     let showAddGroup = writable(false);
     let showAddRoom = writable(false);
-
-    let selectedGroup = $lamp.group.name
-    let selectedRoom = $lamp.room.name
 
     let groupName = "";
     let roomName = "";
@@ -59,11 +55,9 @@
         if (lampName !== "") {
             $lamp.customName = lampName;
         }
-        $lamp.group.name = selectedGroup
-        $lamp.room.name = selectedRoom
 
-        UpdateLight($lamp, selectedRoom, selectedGroup);
-        lampName = ""
+        UpdateLight($lamp);
+        lampName = "";
         isDialogOpen.set(false);
     };
 </script>
@@ -71,7 +65,11 @@
 <Dialog.Root bind:open={$isDialogOpen}>
     <Dialog.Content class="custom-dialog-width">
         <Dialog.Header>
-            <Dialog.Title class="font-mono">{$lamp.customName === "" ? $lamp.name : $lamp.customName}</Dialog.Title>
+            <Dialog.Title class="font-mono"
+                >{$lamp.customName === ""
+                    ? $lamp.name
+                    : $lamp.customName}</Dialog.Title
+            >
             <Dialog.Description class="font-mono">
                 <div class="grid grid-cols-1 gap-4 pt-4">
                     <Label>Lamp</Label>
@@ -79,7 +77,9 @@
                         bind:value={lampName}
                         type="name"
                         id="name"
-                        placeholder={$lamp.customName === "" ? $lamp.name : $lamp.customName}
+                        placeholder={$lamp.customName === ""
+                            ? $lamp.name
+                            : $lamp.customName}
                         class="w-64"
                     />
                     <Label>Group</Label>
@@ -91,7 +91,7 @@
                                 value: $lamp.group.name,
                                 label: $lamp.group.name,
                             }}
-                            bind:label={selectedGroup}
+                            bind:label={$lamp.group.name}
                         />
                         <Button variant="ghost" on:click={toggleAddGroup}>
                             {#if $showAddGroup}
@@ -118,7 +118,7 @@
                                 value: $lamp.room.name,
                                 label: $lamp.room.name,
                             }}
-                            bind:label={selectedRoom}
+                            bind:label={$lamp.room.name}
                         />
                         <Button variant="ghost" on:click={toggleAddRoom}>
                             {#if $showAddRoom}

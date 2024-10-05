@@ -41,19 +41,19 @@ func (a *App) GetLights() ([]models.Light, error) {
 	return lights, nil
 }
 
-func (a *App) UpdateLight(light models.Light, roomName, groupName string) error {
+func (a *App) UpdateLight(light models.Light) error {
 	r := repository.NewLightRepository(a.SqlLite.Db)
 
-	if groupName != "" {
-		group, err := a.GetGroupByName(groupName)
+	if light.Group.Name != "" {
+		group, err := a.GetGroupByName(light.Group.Name)
 		if err != nil {
 			return err
 		}
 		light.Group = group
 	}
 
-	if roomName != "" {
-		room, err := a.GetRoomByName(roomName)
+	if light.Room.Name != "" {
+		room, err := a.GetRoomByName(light.Room.Name)
 		if err != nil {
 			return err
 		}
@@ -78,4 +78,17 @@ func (a *App) ToggleLightLike(light models.Light) error {
 
 	r := repository.NewLightRepository(a.SqlLite.Db)
 	return r.ToggleLiked(changedEntity, "lights")
+}
+
+func (a *App) GetLikedLights() ([]models.Light, error) {
+	var lights = []models.Light{}
+	r := repository.NewLightRepository(a.SqlLite.Db)
+	res, err := r.GetAllLiked()
+	if err != nil {
+		return lights, err
+	}
+
+	lights = res.([]models.Light)
+
+	return lights, nil
 }
