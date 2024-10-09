@@ -48,12 +48,16 @@ func (hue *Hue) GetLights() ([]models.Light, error) {
 		if dimming != nil {
 			brightness = *dimming.Brightness
 		} else {
-			if light.IsOn() {
-				brightness = 100
-			} else {
-				brightness = 0
-			}
+			brightness = -1
+			/*
+				if light.IsOn() {
+					brightness = 100
+				} else {
+					brightness = 0
+				}
+			*/
 		}
+
 		hue.Lights = append(hue.Lights, models.Light{
 			Model: models.Model{
 				ID: *light.Id,

@@ -20,6 +20,7 @@
                     return {
                         ...lamp,
                         on: hueLamp.on,
+                        brightness: hueLamp.brightness,
                     };
                 }
                 return lamp;

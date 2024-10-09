@@ -32,7 +32,21 @@
         lampStore.update((l) => ({ ...l, liked: !l.liked }));
     }
 
+    function dimLight(brightness) {
+        console.log($lampStore, lamp)
+        if (brightness === 0) {
+            ToggleLight(lamp, false);
+            lampStore.update((l) => ({ ...l, on: false }));
+        } else {
+            if (!lamp.on) {
+                console.log('dimming')
+                DimLight(lamp, brightness);
+            }
+        }
+    }
+
     $: if (lamp) {
+        $lampStore.brightness = lamp.brightness;
         $lampStore.on = lamp.on;
     }
 </script>
@@ -44,7 +58,6 @@
                 class="grid grid-cols-3 grid-flow-row gap-4 py-4 pr-8"
             >
                 <HoverCard.Root>
-                    
                     <HoverCard.Trigger>
                         <Button
                             class="row-span-2"
@@ -61,9 +74,15 @@
                             {/if}
                         </Button>
                     </HoverCard.Trigger>
-                    <HoverCard.Content>
-                        <LampHoverCard brightness={[$lampStore.brightness]} on:brightnessChange={(e) => console.log(e.detail.brightness)}/>
-                    </HoverCard.Content>
+                    {#if $lampStore.brightness > -1}
+                    <HoverCard.Content class="w-80">
+                            <LampHoverCard
+                                brightness={[$lampStore.brightness]}
+                                on:brightnessChange={(e) =>
+                                    dimLight(e.detail.brightness[0])}
+                            />
+                        </HoverCard.Content>
+                        {/if}
                 </HoverCard.Root>
                 {#if $lampStore.customName === ""}
                     <p class="col-span-2 text-left">{$lampStore.name}</p>
